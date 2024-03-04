@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mapper.homeMapper">
+    <select id="homeList" resultType="map" parameterType="map">
+        SELECT RPODUCT_NO
+                            , PRODUCT_NAME
+                            , PRODUCT_PRICE
+                            , PRODUCT_COUNT
+                            , PRODUCT_CONTENT
+                            , PRODUCT_TAG
+                            , PRODUCT_IMAGE
+                            
+        FROM TB_PRODUCT
+    </select>
+
+    <select id="bestList" resultType="map" parameterType="map">
+        SELECT RPODUCT_NO
+                            , PRODUCT_NAME
+                            , PRODUCT_PRICE
+                            , PRODUCT_COUNT
+                            , PRODUCT_CONTENT
+                            , PRODUCT_TAG
+                            , PRODUCT_IMAGE
+                            , (SELECT COUNT(PRODUCT_NO)
+        FROM TB_PRODUCT) P_COUNT
+        , (SELECT COUNT())
+    </select>
+
+    <select id="newList" resultType="map" parameterType="map">
+        SELECT RPODUCT_NO
+                            , PRODUCT_NAME
+                            , PRODUCT_PRICE
+                            , PRODUCT_COUNT
+                            , PRODUCT_CONTENT
+                            , PRODUCT_TAG
+                            , PRODUCT_IMAGE
+        FROM TB_PRODUCT
+    </select>
+
+</mapper>

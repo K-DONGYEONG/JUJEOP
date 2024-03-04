@@ -1,0 +1,200 @@
+body {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    background-color: #f7f7f7;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.center-text {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 28px;
+    color: #333;
+}
+
+.basic-info,
+.additional-info {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"],
+.input-group input[type="email"],
+.input-group input[type="radio"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.note {
+    font-size: 12px;
+    color: #888;
+    display: block;
+    margin-top: 5px;
+}
+
+.half-size {
+    display: flex;
+}
+
+.half-size .input-group {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.additional-info label {
+    margin-right: 15px;
+    color: #444;
+}
+
+.additional-info input[name="gender"] {
+    margin-right: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #eae9e9;
+    color: #000000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
+button:hover {
+    background-color: #c8c8c8;
+}
+
+.address-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.address-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    color: #444;
+}
+
+.address-group input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+
+.address-group button {
+    padding: 10px 15px;
+    background-color: #eae9e9;
+    color: #000000;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.address-group .address-input-group {
+    display: flex;
+    align-items: center;
+}
+
+.address-group .address-input-group input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+
+.address-group .address-input-group button {
+    padding: 10px 15px;
+    background-color: #eae9e9;
+    color: #000000;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.gender-input-group {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.gender-input-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+.gender-input-group label {
+    color: #444;
+    margin-right: 10px;
+    white-space: nowrap;
+}
+
+.gender-input-group input[name="gender"] {
+    margin-right: 5px;
+}
+
+.birthdate-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.birthdate-input-group {
+    display: flex;
+    align-items: center;
+}
+
+.birthdate-input-group input[type="text"] {
+    width: 110px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+.birthdate-input-group span {
+    margin: 0 5px; 
+    color: #444;
+}
+
+
+
+
+
+
+
+

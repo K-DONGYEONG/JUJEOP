@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mapper.cartMapper">
+
+  <!-- 장바구니 목록을 출력하는 SELECT SQL문 -->
+  <select id = "cartList" parameterType="java.util.HashMap" resultType="map">
+  SELECT c.CART_NO, p.PRODUCT_IMAGE, p.PRODUCT_NAME, p.PRODUCT_CONTENT, p.PRODUCT_PRICE,  c.CART_COUNT,
+  (p.PRODUCT_PRICE * c.CART_COUNT) AS TOTAL_PRICE, p.PRODUCT_OPTION, p.PRODUCT_NO
+  FROM TB_CART c
+  JOIN TB_PRODUCT p ON c.PRODUCT_NO = p.PRODUCT_NO
+  WHERE c.USER_NO = #{user_no}
+  </select>
+
+    <!-- 장바구니 삭제 버튼 누를시 실행되는 DELETE SQL문-->
+	<delete id="cartDelete" parameterType="int">
+		delete from TB_CART where cart_no= #{cart_no}
+	</delete>
+  
+    <!-- 장바구니 담기 버튼 누를시 실행되는 INSERT SQL문 -->
+  <insert id = "cartInsert" parameterType="java.util.HashMap">
+        INSERT INTO TB_CART(cart_no, user_no, product_no, cart_count) VALUES(
+     seq_tb_cart.nextval, #{user_no}, #{product_no}, #{cart_count})
+    </insert>  
+    </mapper>

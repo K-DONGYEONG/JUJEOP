@@ -1,0 +1,167 @@
+/*** 회원정보 관리 ***/
+body {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: large;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center; 
+    max-width: 1000px; 
+    margin: 0 auto;
+}
+
+.tablink {
+    background-color: #eae9e9;
+    border: 1px solid #ccc;
+    padding: 30px 60px;
+    cursor: pointer;
+    border-radius: 5px; 
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: large;
+}
+
+.tabcontent {
+    display: none;
+    padding: 30px;
+    max-width: 500px;
+    margin: 0 auto;
+    
+}
+
+#editForm {
+border: 2px solid #ccc;
+border-radius: 10px;
+padding: 20px;
+max-width: 500px; 
+margin: 0 auto; 
+}
+
+#editForm input[type="text"],
+#editForm input[type="email"],
+#editForm input[type="password"] {
+width: 100%;
+padding: 20px;
+border: 1px solid #ccc;
+border-radius: 5px; 
+margin-bottom: 15px;
+}
+
+#editForm button {
+padding: 15px 30px;
+background-color: #eae9e9; 
+color: #000000;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
+#editForm button + button {
+margin-left: 10px;
+} 
+
+.saveButton {
+display: none;
+}    
+
+/*** 주문내역 관리 ***/
+.order-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 450px;
+    border-radius: 5px; 
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-date {
+    font-weight: bold;
+}
+
+.view-details-btn {
+    background-color: #eae9e9;
+    color: #000000;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+.order-info {
+    margin-top: 10px;
+}
+
+.orderer, .phone-number {
+    display: block;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 15px 0;
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+}
+
+.product-info img {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+}
+
+/*** 배송지 관리 ***/        
+.address-box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 450px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px; 
+}
+
+.address-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.address-name, .phone-number, .address {
+    margin-bottom: 10px;
+}
+
+.edit-button {
+    background-color: #eae9e9;
+    color: #000000;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px; 
+}
+
+.address-edit {
+    display: flex;
+    align-items: flex-end;
+}
+
+.address-edit button {
+padding: 15px 30px;
+background-color: #eae9e9; 
+color: #000000;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
+.address-edit button + button {
+margin-left: 10px;
+}

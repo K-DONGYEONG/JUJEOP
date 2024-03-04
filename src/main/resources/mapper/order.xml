@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mapper.orderMapper">
+    <!-- 결제시 주문정보 입력 SQL문 -->
+    <insert id="orderInsert" parameterType="map" >
+        INSERT INTO TB_ORDER
+                    (ORDER_NO,
+                    USER_NO,
+                    PRODUCT_NO,
+                    ORDER_TOTAL,
+                    ORDER_COMMENT,
+                    ORDER_DATE,
+                    RES_NAME,
+                    RES_PHONE,
+                    RES_ADDRESS,
+                    RES_ADDRESS_DETAIL
+                    )
+                    VALUES
+                    (
+                    NVL((SELECT MAX(ORDER_NO) FROM TB_ORDER),0)+1,
+                    #{user_no},
+                    #{product_no},
+                    #{order_total},
+                    #{order_comment},
+                    TO_CHAR(SYSDATE,'YYYY-MM-DD'),
+                    #{res_name},
+                    #{res_phone},
+                    #{res_address},
+                    #{res_address_detail}
+                    )
+    </insert>
+    <!-- 결제시 사용될 SQL문 -->
+    <insert id="payInsert1" parameterType="map" >
+        INSERT INTO TB_PAY
+            (PAY_NO,
+            ORDER_NO,
+            PAY_METHOD,
+            PAY_PRICE,
+            PAY_DATE,
+            PAY_COUNT)
+            VALUES(
+                NVL((SELECT MAX(PAY_NO) FROM TB_PAY),0)+1
+                ,NVL((SELECT MAX(ORDER_NO) FROM TB_ORDER WHERE USER_NO = #{user_no}),0)+1
+                ,#{pay_method}
+                ,#{pay_price}
+                ,TO_CHAR(SYSDATE,'YYYY-MM-DD')
+                ,#{pay_count})
+    </insert>
+    <!-- 주문내역 상세목록을 출력하는 SELECT SQL문 -->
+    <!-- 주문번호, 주문날짜, 수취인 이름, 수취인 번호, 상품이미지, 상품명, 상품옵션수량, 상품가격, 주문요청사항, 주문총금액-->
+    <select id="userInfo" parameterType="map" resultType="map">
+            SELECT  USER_NO,
+                    USER_NAME,
+                    USER_PHONE,
+                    USER_ADDRESS,
+                    USER_ADDRESS_DETAIL
+            FROM TB_USER
+            WHERE USER_NO = #{user_no}
+    </select>
+       <!-- 주문내역 상세목록을 출력하는 SELECT SQL문 -->
+    <!-- 주문번호, 주문날짜, 수취인 이름, 수취인 번호, 상품이미지, 상품명, 상품옵션수량, 상품가격, 주문요청사항, 주문총금액-->
+    <select id="orderInfo" parameterType="map" resultType="map">
+        SELECT DISTINCT
+                o.ORDER_NO,
+                TO_CHAR(o.ORDER_DATE,'YYYY-MM-DD') AS ORDER_DATE,
+                o.RES_NAME,
+                o.RES_PHONE,
+                p.PRODUCT_IMAGE,
+                p.PRODUCT_NAME,
+                p.PRODUCT_PRICE,
+                o.ORDER_COMMENT,
+                o.ORDER_TOTAL,
+                o.RES_ADDRESS ||', '|| o.RES_ADDRESS_DETAIL AS RES_ADDRESS,
+                pay.PAY_METHOD,
+                pay.PAY_DATE,
+                pay.PAY_PRICE,
+                pay.PAY_COUNT
+            FROM TB_ORDER o
+            JOIN TB_PRODUCT p
+                ON o.PRODUCT_NO = p.PRODUCT_NO
+            JOIN TB_PAY pay
+                ON pay.ORDER_NO = o.ORDER_NO
+            WHERE o.USER_NO = #{user_no}
+            AND o.ORDER_NO = #{order_no}
+    </select>
+    <!-- 주문내역을 삭제하는 DELETE SQL문 -->
+    <delete id="deleteOrder" parameterType="map" >
+        DELETE FROM TB_ORDER
+        WHERE  USER_NO = #{user_no}
+        AND    ORDER_NO = #{order_no}
+    </delete>
+
+    <!-- 결제내역을 삭제하는 DELETE SQL문 -->
+    <delete id="deletePay" parameterType="map" >
+        DELETE FROM TB_PAY
+        WHERE  ORDER_NO = #{order_no}
+    </delete>
+
+    <!-- 장바구니 내역을 주문시 장바구니를 비우는 SQL문 -->
+    <delete id="cartDeleteAll" parameterType="map">
+    DELETE FROM TB_CART
+    WHERE USER_NO = #{user_no}
+    </delete>
+</mapper>

@@ -1,0 +1,152 @@
+body {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: large;
+}
+
+.tabcontent {
+    margin: 5px auto;
+    max-width: 600px; 
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.divider {
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    margin: 15px 0;
+}
+
+.address-box,
+.order-box,
+.pay-box,
+.bill-box {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 2px solid #828080; /* Black border */
+}
+
+h2 {
+    text-align: center;
+}
+
+.res_name,
+.res_phone,
+.address,
+.order-note,
+.total-price,
+.total-payment,
+.kakaopay-button {
+    font-size: 16px;
+    color: #666;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.payment-box {
+    display: flex; 
+    justify-content: flex-start; 
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.bill-box {
+    display: flex; 
+    flex-direction: column; 
+    justify-content: flex-start;
+    /* align-items: flex-start;  */
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.bank-transfer-button,
+.kakaopay-button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: medium;
+    display: flex;
+    align-items: center;
+    background-color: #fff; 
+    color: #000000;
+    margin: 0 10px 10px 10px;
+    border: 2px solid #a4a3a3; 
+}
+
+.kakaopay-button img {
+    width: 60px;
+    height: auto;
+}
+
+#productInfo {
+    display: flex;
+    align-items: center;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.product-details img {
+    width: 100px;
+    height: 100px;
+}
+
+.product-name {
+    font-weight: bold;
+}
+
+.product-price {
+    font-size: smaller;
+    color: #666;
+}
+
+.total-price,
+.total-payment {
+    display: flex;
+    justify-content: space-between;
+}
+
+.total-price span,
+.total-payment span {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.payment-button {
+border: 2px solid #eddeed;
+border-radius: 10px;
+padding: 20px 200px; 
+max-width: 800px; 
+margin: 0 auto;
+display: flex;
+justify-content: center;
+margin-top: 30px;
+margin-bottom: 30px;
+font-family: 'IBM Plex Sans KR', sans-serif;
+font-size: large;
+}
+
+.agree-box {
+    text-align: center;
+}
+
+.agree-box label {
+    display: inline-block;
+    font-size: 18px; 
+    margin-top: 10px;
+}
+
+.agree-box input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px; 
+}

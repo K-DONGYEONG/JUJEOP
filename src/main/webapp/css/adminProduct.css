@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .card-body {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #fff;
+  }
+
+  .book-detail {
+    margin-bottom: 20px;
+  }
+
+  .book-header {
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+  }
+
+  .input-group {
+    margin-bottom: 15px;
+  }
+
+  .input-group-text {
+    width: 100px;
+    font-weight: bold;
+  }
+
+  .btn-group {
+    margin-top: 10px;
+  }
+
+  /* Styling for the table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+
+  .product-image {
+    max-width: 150px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-info, .btn-warning, .btn-success {
+    border-radius: 5px;
+    font-weight: bold;
+  }
+
+  .btn-info {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+  }
+
+  .btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+
+  .btn-info:hover, .btn-warning:hover, .btn-success:hover {
+    opacity: 0.8;
+  }
+
+  .modal-content {
+    border-radius: 5px;
+  }
+
+  .modal-header {
+    background-color: #17a2b8;
+    color: #fff;
+    border-radius: 5px 5px 0 0;
+  }
+
+  .modal-footer {
+    background-color: #f7f7f7;
+    border-radius: 0 0 5px 5px;
+  }
+
+  .modal-title {
+    font-weight: bold;
+  }

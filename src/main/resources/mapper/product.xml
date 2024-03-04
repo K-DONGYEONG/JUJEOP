@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mapper.productMapper">
+	<!-- 상품전체 조회 -->
+    <select id="productList" resultType="map" parameterType="map">
+        SELECT *
+        FROM tb_product
+	</select>
+
+	    <select id="productBest" resultType="map" parameterType="map">
+        SELECT *
+        FROM tb_product
+		WHERE CATEGORY_NO = 1
+	</select>
+
+
+	    <select id="productNew" resultType="map" parameterType="map">
+        SELECT *
+        FROM tb_product
+		WHERE CATEGORY_NO = 2
+	</select>
+    
+	 <select id="productTak" resultType="map" parameterType="map">
+        SELECT *
+		FROM tb_product
+		WHERE D_CATEGORY_NO = 1
+	</select>
+
+	 <select id="productYak" resultType="map" parameterType="map">
+        SELECT *
+        FROM tb_product
+		WHERE D_CATEGORY_NO = 2
+	</select>
+
+	 <select id="productGwa" resultType="map" parameterType="map">
+        SELECT *
+        FROM tb_product
+		WHERE D_CATEGORY_NO = 3
+	</select>
+	 <select id="productJeung" resultType="map" parameterType="map">
+        SELECT *
+        FROM tb_product
+		WHERE D_CATEGORY_NO = 4
+	</select>
+
+	<insert id="productInsert" parameterType="map" useGeneratedKeys="true"  keyColumn="product_no"  keyProperty="product_no">
+		INSERT INTO tb_product(PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_COUNT, PRODUCT_CONTENT, PRODUCT_TAG, PRODUCT_IMAGE, PRODUCT_OPTION, D_CATEGORY_NO) 
+		              VALUES(seq_tb_product.nextval
+		                          , #{product_name}, #{product_price}, #{product_count}
+		                          , #{product_content}, #{product_tag},  #{product_image}
+								  , #{product_option}, #{d_category_no})
+	</insert>
+
+    <update id="productUpdate" parameterType="map">
+		UPDATE tb_product
+		SET
+			PRODUCT_NAME =    #{product_name},
+			PRODUCT_PRICE =   #{product_price},
+			PRODUCT_COUNT =   #{product_count},
+			PRODUCT_CONTENT = #{product_content},
+			PRODUCT_TAG =     #{product_tag},
+			PRODUCT_IMAGE =   #{product_image}
+			PRODUCT_OPTION =   #{product_option}
+			D_CATEGORY_NO =   #{d_category_no}
+		WHERE 
+			PRODUCT_NO = #{product_no}
+	</update>
+
+    <delete id="productDelete" parameterType="map">
+		DELETE FROM tb_product where PRODUCT_NO=#{n_no}
+	</delete>
+    
+    	<select id="productDetail" parameterType="java.util.Map" resultType="map">
+		SELECT *
+		  FROM tb_product
+		<where>
+			<if test="product_no!=null">AND product_no=#{product_no}</if>		
+			<if test="gubun!=null">
+				<choose>
+					<when test='gubun.equals("product_name")'>
+						AND (product_name LIKE '%'||#{keyword}||'%')
+					</when>
+					<when test='gubun.equals("product_price")'>
+						AND (product_price LIKE '%'||#{keyword}||'%')
+					</when>
+					<when test='gubun.equals("product_tag")'>
+						AND (product_tag LIKE '%'||#{keyword}||'%')
+					</when>
+					<when test='gubun.equals("product_image")'>
+						AND (product_image LIKE '%'||#{keyword}||'%')
+					</when>
+					<when test='gubun.equals("product_option")'>
+						AND (product_option LIKE '%'||#{keyword}||'%')
+					</when>
+					<when test='gubun.equals("d_category")'>
+						AND (d_category_no LIKE '%'||#{keyword}||'%')
+					</when>
+				</choose>
+			</if>			
+		</where>
+		ORDER BY product_no desc
+	</select>
+
+<select id="productSearch" parameterType="java.lang.String" resultType="map">
+	SELECT * FROM tb_product WHERE product_name LIKE '%'||#{product_name}||'%' 
+</select>
+</mapper>

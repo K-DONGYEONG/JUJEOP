@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mapper.qnaMapper">
+	<!-- QNA 수정하는 SQL문 -->
+    <update id="tb_qnaUpdate" parameterType="map">
+        UPDATE 	tb_qna
+		SET
+			qna_title = #{qna_title},
+			qna_content = #{qna_content},
+			qna_date = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		WHERE 
+			qna_no = #{qna_no}
+	</update>
+
+<!-- QNA 게시글 클릭시 조회수 올리는 SQL문 -->
+	<update id="memberhitCount" parameterType="map">
+		UPDATE 	tb_qna
+		SET
+			qna_hitcount = qna_hitcount + 1
+		WHERE 
+			qna_no = #{value}
+	</update>
+
+	<!-- 게시글 삭제하는 SQL문 -->
+	<delete id="tb_qnaDelete" parameterType="int">
+		delete from tb_qna where qna_no=#{value}
+	</delete>
+	
+    <select id="tb_qnaList" resultType="map" parameterType="map">
+		SELECT TQ.QNA_NO,TQ.QNA_TITLE, TQ.QNA_CONTENT, TQ.QNA_DATE, TQ.QNA_HITCOUNT, TC.C_CONTENT, TC.C_NO,TQ.QNA_WRITER
+		FROM TB_QNA TQ
+		LEFT JOIN TB_COMMENT TC ON TQ.QNA_NO = TC.QNA_NO
+		<where>
+			<if test="qna_no!=null">AND TQ.qna_no=#{qna_no}</if>		
+			<if test="gubun!=null">
+				<choose>
+					<when test='gubun.equals("qna_title")'>
+						AND (TQ.qna_title LIKE '%'||#{keyword}||'%')
+					</when>
+					<when test='gubun.equals("qna_content")'>
+						AND (TQ.qna_content LIKE '%'||#{keyword}||'%')
+					</when>
+					<when test='gubun.equals("qna_writer")'>
+						AND (TQ.qna_writer LIKE '%'||#{keyword}||'%')
+					</when>
+				</choose>
+			</if>				
+		</where>
+		ORDER BY qna_no desc
+    </select>
+
+	<!-- QNA 게시글 등록하는 SQL문 -->
+	<insert id="tb_qnaInsert" parameterType="map" >
+		INSERT INTO tb_qna(qna_no, user_no, qna_title , qna_content, qna_hitcount, qna_date, qna_writer) 
+		        VALUES(seq_tb_qna.nextval
+		                        ,#{user_no},#{qna_title},#{qna_content}, 0
+		                        , TO_CHAR(SYSDATE, 'YYYY-MM-DD'), #{qna_writer})
+	</insert>		
+
+	<!-- QNA 게시글 등록하는 SQL문2 -->
+	<insert id="tb_qnaInsert2" parameterType="map" >
+		INSERT INTO tb_qna(qna_no, user_no, qna_title , qna_content, qna_hitcount, qna_date, qna_writer) 
+		        VALUES(seq_tb_qna.nextval
+		                        ,#{user_no},#{qna_title},#{qna_content}, 0
+		                        , TO_CHAR(SYSDATE, 'YYYY-MM-DD'), #{qna_writer})
+	</insert>	
+
+	<delete id="qnaCommentDelete" parameterType="int"> 
+	delete from tb_comment where qna_no = #{qna_no}
+	</delete>
+</mapper>

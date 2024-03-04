@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mapper.adminMapper">
+
+	<!--  관리자가 회원목록(관리자제외)을 확인하는 SQL문 -->
+    <select id="adminMemberList" resultType="map" parameterType="map">
+      SELECT * FROM TB_USER
+		<where>
+			user_admin != 1	
+			<if test="gubun!=null">
+				<choose>
+					<when test='gubun.equals("user_name")'>
+						AND (user_name LIKE '%'||#{keyword}||'%')
+					</when>
+					<when test='gubun.equals("user_id")'>
+						AND (user_id LIKE '%'||#{keyword}||'%')
+					</when>
+					<when test='gubun.equals("user_gender")'>
+						AND (user_gender LIKE '%'||#{keyword}||'%')
+					</when>
+				</choose>
+			</if>				
+		</where>
+		ORDER BY USER_NO
+    </select>
+
+	<!--  관리자가 회원별 주문목록을 확인하는 SQL문 -->
+    <select id="memberOrderList" resultType="map" parameterType="map">
+		SELECT P.PRODUCT_IMAGE, P.PRODUCT_NAME, P.PRODUCT_PRICE, O.ORDER_NO, O.USER_NO
+		FROM TB_ORDER O
+		JOIN TB_PRODUCT P ON O.PRODUCT_NO = P.PRODUCT_NO
+		AND O.USER_NO = #{user_no}
+    </select>
+
+	<!--  관리자가 회원별 주문목록을 삭제하는 SQL문 -->
+	<delete id="memberOrderDelete" parameterType="int">
+	DELETE FROM TB_ORDER WHERE order_no = #{order_no} 
+	</delete>
+
+	<delete id="memberPayDelete" parameterType="int">
+	DELETE FROM TB_PAY WHERE order_no = #{order_no} 
+	</delete>
+
+
+    <!-- 관리자가 상품목록을 출력하는 SQL문 -->
+          <select id="adminProductList" resultType="map" parameterType="map">
+     	SELECT
+			product_no, product_tag, category_no, product_count, product_name, product_price, product_image, product_content
+		  FROM TB_PRODUCT
+		<where>
+			<if test="product_no!=null">AND product_no=#{product_no}</if>		
+			<if test="gubun!=null">
+				<choose>
+					<when test='gubun.equals("product_tag")'>
+						AND (product_tag LIKE '%'||#{keyword}||'%')
+					</when>
+					<when test='gubun.equals("product_name")'>
+						AND (product_name LIKE '%'||#{keyword}||'%')
+					</when>
+				</choose>
+			</if>				
+		</where>
+		ORDER BY product_no
+    </select>
+
+    <!-- 관리자가 상품을 등록하는 SQL문 -->
+	<insert id="adminFileInsert" parameterType="map" >
+		INSERT INTO tb_product(product_no, category_no, product_tag, product_name, product_content,product_price, product_count,product_image, product_option) 
+		              VALUES(seq_tb_product.nextval,#{category_no}
+		                           ,#{product_tag},#{product_name},#{product_content}, #{product_price},#{product_count}, #{product_image}, #{product_option})
+	</insert>
+
+    <!-- 관리자가 상품을 수정하는 SQL문 -->
+	<update id="adminProductUpdate" parameterType="map">
+		UPDATE 	TB_PRODUCT
+		SET
+			category_no = #{category_no},
+			product_tag = #{product_tag},
+			product_name = #{product_name},
+			product_price = #{product_price},
+			product_content = #{product_content},
+			product_count = #{product_count}
+		WHERE 
+			product_no = #{product_no}
+	</update>
+
+    <!-- 관리자가 상품을 삭제하는 SQL문 -->
+	<delete id="adminProductDelete" parameterType="int">
+		delete from tb_product where product_no=#{product_no}
+	</delete>
+
+    <!-- 관리자가 공지사항목록을 출력하는 SQL문 -->
+        <select id="adminNoticeList" resultType="map" parameterType="map">
+     	SELECT
+			notice_no, notice_title, notice_content, notice_date, notice_hitcount
+		  FROM TB_NOTICE
+		<where>
+			<if test="notice_no!=null">AND notice_no=#{notice_no}</if>		
+			<if test="gubun!=null">
+				<choose>
+					<when test='gubun.equals("notice_title")'>
+						AND (notice_title LIKE '%'||#{keyword}||'%')
+					</when>
+					<when test='gubun.equals("notice_content")'>
+						AND (notice_content LIKE '%'||#{keyword}||'%')
+					</when>
+				</choose>
+			</if>				
+		</where>
+		ORDER BY notice_no desc
+    </select>
+
+    <!-- 관리자가 공지사항을 수정하는 SQL문 -->
+	<update id="adminNoticeUpdate" parameterType="map">
+		UPDATE 	TB_NOTICE
+		SET
+			notice_title = #{notice_title},
+			notice_content = #{notice_content},
+			notice_date = TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+		WHERE 
+			notice_no = #{notice_no}
+	</update>
+
+    <!-- 관리자가 공지사항을 등록하는 SQL문 -->
+	<insert id="adminNoticeInsert" parameterType="map" >
+		INSERT INTO tb_notice(notice_no, user_no, notice_title, notice_hitcount, notice_content, notice_date) 
+		              VALUES(seq_tb_notice.nextval, 0
+		                           ,#{notice_title},0,#{notice_content}
+		                          , TO_CHAR(SYSDATE, 'YYYY-MM-DD'))
+	</insert>
+
+    <!-- 관리자가 공지사항을 삭제하는 SQL문 -->
+	<delete id="adminNoticeDelete" parameterType="int">
+		delete from tb_notice where notice_no=#{notice_no}
+	</delete>
+
+    <!-- 관리자가 QnA게시판 목록을 출력하는 SQL문 -->
+        <select id="adminQnaList" resultType="map" parameterType="map">
+		SELECT TQ.QNA_NO,TQ.QNA_TITLE, TQ.QNA_CONTENT, TQ.QNA_DATE, TQ.QNA_HITCOUNT, TC.C_CONTENT, TC.C_NO,TQ.QNA_WRITER
+		FROM TB_QNA TQ
+		LEFT JOIN TB_COMMENT TC ON TQ.QNA_NO = TC.QNA_NO
+		<where>
+			<if test="qna_no!=null">AND TQ.qna_no=#{qna_no}</if>		
+			<if test="gubun!=null">
+				<choose>
+					<when test='gubun.equals("qna_title")'>
+						AND (TQ.qna_title LIKE '%'||#{keyword}||'%')
+					</when>
+					<when test='gubun.equals("qna_content")'>
+						AND (TQ.qna_content LIKE '%'||#{keyword}||'%')
+					</when>
+					<when test='gubun.equals("qna_writer")'>
+						AND (TQ.qna_writer LIKE '%'||#{keyword}||'%')
+					</when>
+				</choose>
+			</if>				
+		</where>
+		ORDER BY qna_no desc
+    </select>
+
+    <!-- 조회수 관련 SQL문 -->
+    	<update id="hitCount" parameterType="int">
+		UPDATE 	TB_QNA
+		SET
+			qna_hitcount = qna_hitcount + 1
+		WHERE 
+			qna_no = #{value}
+	</update>
+
+    <!-- 관리자가 QNA답글을 삭제하는 SQL문 -->
+  	<delete id="adminQnaDelete" parameterType="int">
+		delete from TB_COMMENT where c_no = #{c_no}
+	</delete>
+
+    <!-- 관리자가 QNA답글을 등록하는 SQL문 -->
+	<insert id="adminQnaCommentInsert" parameterType="map">
+        INSERT INTO TB_COMMENT(c_no, qna_no, c_content, c_date) values(seq_tb_comment.nextval, #{qna_no},#{c_content},TO_CHAR(SYSDATE,'YYYY-MM-DD'))	
+	</insert>
+</mapper>
